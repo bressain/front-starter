@@ -17,9 +17,10 @@
     "modules": true
   },
   "rules": {
-    "brace-style": [2, "1tbs", { "allowSingleLine: true" }],
+    "brace-style": [2, "1tbs", { "allowSingleLine": true }],
     "camelcase": 0,
     "comma-style": [1, "last"],
+    "eol-last": 0,
     "eqeqeq": 1,
     "indent": [2, 2],
     "no-trailing-spaces": 1,

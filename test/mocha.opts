@@ -1,2 +1,6 @@
+--require test/babel-register.js
+--require test/node-extensions.js
+--require test/dom.js
 --require chai
+--require sinon-chai
 --reporter nyan

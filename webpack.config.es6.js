@@ -11,10 +11,10 @@ export default {
     path: './dist',
     filename: 'bundle.js'
   },
-  module:{
+  module: {
     loaders: [
       { test: /\.js$/, loader: 'babel?stage=0', exclude: /node_modules/ },  // run through babel with stage 0 (experimental es7) features
-      { test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css!postcss!cssnext') }  // allow use of CSS4 syntax through postcss plugin system with cssnext
+      { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=2&localIdentName=[name]__[local]__[hash:base64:5]!postcss!cssnext') }  // allow use of CSS4 syntax through postcss plugin system with cssnext
     ]
   },
   postcss: [ autoprefixer ],
