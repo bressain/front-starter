@@ -1,2 +1,3 @@
 // run things through babel first
-require('babel/register')({ stage: 0 })
+require('babel-polyfill')
+require('babel-core/register')

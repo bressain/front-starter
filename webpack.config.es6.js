@@ -1,10 +1,16 @@
 import autoprefixer from 'autoprefixer'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
+import cssNext from 'postcss-cssnext'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import postcssImport from 'postcss-import'
+import postcssBrowserReporter from 'postcss-browser-reporter'
+import postcssReporter from 'postcss-reporter'
+import postcssUrl from 'postcss-url'
 
 export default {
   entry: [
-    'babel/polyfill',  // initialize babel/es6 environment first
+    `webpack-dev-server/client?http://localhost:3000`,
+    'babel-polyfill',  // initialize babel/es6 environment first
     './lib/index.js'
   ],
   output: {
@@ -13,17 +19,27 @@ export default {
   },
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'babel?stage=0', exclude: /node_modules/ },  // run through babel with stage 0 (experimental es7) features
-      { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=2&localIdentName=[name]__[local]__[hash:base64:5]!postcss!cssnext') }  // allow use of CSS4 syntax through postcss plugin system with cssnext
+      { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },  // run through babel with stage 0 (experimental es7) features
+      { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]!postcss-loader') },
+      { test: /\.(jpg|png|gif)$/, loader: 'file-loader?limit=10000&name=/[name].[ext]' }
     ]
   },
-  postcss: [ autoprefixer ],
+  postcss: [
+    postcssImport,
+    postcssUrl({ url: url => url }),
+    cssNext,                          // allow use of CSS4 syntax through postcss plugin system with cssnext
+    autoprefixer,                     // add vendor prefixes
+    postcssBrowserReporter,
+    postcssReporter
+  ],
+  cssnext: {
+    compress: false,
+    url: false // cssnext ruins css url requires without this (e.g. url('./derp.jpg') => url('derp.jpg'))
+  },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'node_modules/html-webpack-template/index.html',
-      title: 'React Starter',
-      appMountId: 'app',
-      devServer: 'http://localhost:3000'
+      template: './lib/index.ejs',
+      inject: 'body'
     }),
     new ExtractTextPlugin(null, 'bundle.css')  // extract all css into a file instead of inlining into the head
   ],
