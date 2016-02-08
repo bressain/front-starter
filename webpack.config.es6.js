@@ -6,13 +6,20 @@ import postcssImport from 'postcss-import'
 import postcssBrowserReporter from 'postcss-browser-reporter'
 import postcssReporter from 'postcss-reporter'
 import postcssUrl from 'postcss-url'
+import webpack from 'webpack'
 
 export default {
-  entry: [
-    `webpack-dev-server/client?http://localhost:3000`,
-    'babel-polyfill',  // initialize babel/es6 environment first
-    './lib/index.js'
-  ],
+  devtool: 'source-map',
+  entry: {
+    vendor: [
+      'webpack-dev-server/client?http://localhost:3000',
+      'babel-polyfill',  // initialize babel/es6 environment first
+      'react',
+      'react-dom',
+      'react-styleable'
+    ],
+    app: './lib/index.js'
+  },
   output: {
     path: './dist',
     filename: 'bundle.js'
@@ -41,7 +48,8 @@ export default {
       template: './lib/index.ejs',
       inject: 'body'
     }),
-    new ExtractTextPlugin(null, 'bundle.css')  // extract all css into a file instead of inlining into the head
+    new ExtractTextPlugin(null, 'bundle.css'),  // extract all css into a file instead of inlining into the head
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js')
   ],
   devServer: {
     port: 3000
