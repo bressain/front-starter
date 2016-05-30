@@ -35,7 +35,6 @@ export default {
     postcssImport,
     postcssUrl({ url: url => url }),
     cssNext,                          // allow use of CSS4 syntax through postcss plugin system with cssnext
-    autoprefixer,                     // add vendor prefixes
     postcssBrowserReporter,
     postcssReporter
   ],
