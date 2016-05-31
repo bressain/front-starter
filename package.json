@@ -15,7 +15,7 @@
     "lint": "eslint lib/"
   },
   "author": "Bressain Dinkelman",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "autobind-decorator": "^1.3.3",
     "autoprefixer": "^6.3.1",

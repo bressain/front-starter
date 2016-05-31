@@ -2,10 +2,15 @@
 
 Jumping off point for a front-end app
 
-## Using:
+## Using
 
 * Babel
 * Webpack
 * React
 * PostCSS/CSSNext/Autoprefixer
 * Mocha/Chai
+
+## License
+
+MIT
+
